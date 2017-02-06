@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{expex,hyperref}
+\usepackage[margin=1in]{geometry}
+
+%
+
+\title{glossR: An example from Besemah}
+
+\begin{document}
+  \maketitle
+
+  \noindent The example in (\ref{ex:pse-pv-unrealized-a}) uses the \texttt{expex} package within an R function \texttt{asis\_output()}, but (\ref{ex:pse-pv-unrealized-b}) uses \texttt{expex} within \LaTeX. Note that in the code for the the example in (\ref{ex:pse-pv-unrealized-a}), the backslash must be escaped with a second backslash, and must be characters within quotation marks in R. The only funny thing is that the output of (\ref{ex:pse-pv-unrealized-a}) is gray and not black. Not sure why this is the case. There's more a really helpful vignette on Custom Print Methods in \texttt{knitr} (\url{https://cran.r-project.org/web/packages/knitr/vignettes/knit_print.html}). We're getting closer!\\
+
+  <<setup, include=FALSE>>=
+  library(knitr)
+  @
+
+  <<echo=TRUE>>=
+  asis_output(
+    "\\ex
+      \\begingl
+        \\gla e'e lah di-pulibik-i.//
+        \\glb uhuh \\textsc{pfv} \\textsc{pv}-plastic.bag-\\textsc{loc.appl}//
+        \\glft `uhuh, (the seedlings) have already been potted.'//
+      \\endgl
+      \\label{ex:pse-pv-unrealized-a}
+    \\xe"
+  )
+  @
+
+  \ex~\underline{Patientive voice with unrealized A argument}\\
+    \begingl
+      \gla e'e lah di-pulibik-i.//
+      \glb uhuh \textsc{pfv} \textsc{pv}-plastic.bag-\textsc{loc.appl}//
+      \glft `uhuh, (the seedlings) have already been potted.'\\
+      \trailingcitation{(oai:paradisec.org.au:BJM01-011, 00:00:44.008---00:00:44.008, Rili)}//
+    \endgl
+    % GLOSSBOX BJM01-011 00:00:42.000  00:00:44.000 @
+  \label{ex:pse-pv-unrealized-b}
+  \xe
+
+\end{document}
