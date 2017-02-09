@@ -12,8 +12,42 @@
   \noindent The example in (\ref{ex:pse-pv-unrealized-a}) uses the \texttt{expex} package within an R function \texttt{asis\_output()}, but (\ref{ex:pse-pv-unrealized-b}) uses \texttt{expex} within \LaTeX. Note that in the code for the the example in (\ref{ex:pse-pv-unrealized-a}), the backslash must be escaped with a second backslash, and must be characters within quotation marks in R. The only funny thing is that the output of (\ref{ex:pse-pv-unrealized-a}) is gray and not black. Not sure why this is the case. There's more a really helpful vignette on Custom Print Methods in \texttt{knitr} (\url{https://cran.r-project.org/web/packages/knitr/vignettes/knit_print.html}). We're getting closer!\\
 
   <<setup, include=FALSE>>=
-  library(knitr)
+    library(knitr)
+    # create a dataframe with the examples
+    gla = c("e'e lah di-pulibik-i.", "lah pulibik-i.")
+    glb = c("uhuh \\textsc{pfv} \\textsc{pv}-plastic.bag-\\textsc{loc.appl}", "\\textsc{pfv} \\textsc{[pv]}plastic.bag-\\textsc{loc.appl}")
+    glft = c("uhuh, (the seedlings) have already been potted.", "(the seedlings) have already been potted.")
+    begin = c(42.232,44.102)
+    end = c(44.442,46.212)
+    speaker = c("Rili","Jamisah")
+    ex.df = data.frame(gla,glb,glft,begin,end,speaker, stringsAsFactors = FALSE)
+    rm(gla,glb,glft,begin,end,speaker)
+  #  the gloss function that prints the expex code
+    gloss <- function(df, bt, et) {
+      if (bt >= df$begin && bt < df$end) {
+        if (et > df$begin && et <= df$end) {
+        ex <- paste(c("\\begingl",
+                 paste(c("\\gla", " ", ex.df$gla, "//"), collapse = ""),
+                 paste(c("\\glb", " ", ex.df$glb, "//"), collapse = ""),
+                 paste(c("\\glft", " ", "`", ex.df$glft, "'", "//"), collapse = ""),
+                 "\\endgl"), sep = "\n  ", collapse = "\n  ")
+        asis_output(ex)
+      } else print("Sorry, I couldn't find an example. Please check the the time you included.")
+      } else print("Sorry, I couldn't find an example. Please check the the time you included.")
+    }
   @
+
+  \ex~\underline{Patientive voice with unrealized A argument}\\
+  <<echo=FALSE>>=
+#  apply(ex.df, 1, gloss, 43.000, 44.000)
+      gloss(ex.df, 43.000, 44.000)
+#    if (41.000 >= ex.df$begin){
+#      apply(ex.df, 1, gloss)
+#    } else print("Sorry, I couldn't find an example. Please check the the time you included.")
+  @
+    \label{ex:pse-pv-unrealized-b}
+  \xe
+
 
   <<echo=TRUE>>=
   asis_output(
