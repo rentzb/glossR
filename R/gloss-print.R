@@ -22,10 +22,25 @@ print_selected_time <- function(data,start_annotation,end_annotation){
   data$annotation <- as.character(data$annotation)
   annotations_selected <- data %>% filter(start_time_s >= start_annotation & end_time_s <= end_annotation)
   annotations_selected <- annotations_selected[order(annotations_selected$start_time_s),]
-  print(cat(paste(toupper(annotations_selected$participant_name),';\t',annotations_selected$annotations,'//\n',sep="")))
   return(annotations_selected)
 }
 
+  gloss <- function(dataframe){
+  ex <- paste(c("\\begingl",
+                paste(c("\\gla", " ", dataframe$gla, "//"), collapse = ""),
+                paste(c("\\glb", " ", dataframe$glb, "//"), collapse = ""),
+                paste(c("\\glft", " ", "`", dataframe$glft, "'", "//"), collapse = ""),
+                "\\endgl"), sep = "\n  ", collapse = "\n  ")
+  #asis_output(ex)
+  print(ex)
+  }
+  #print(cat(paste(toupper(annotations_selected$participant_name),';\t',annotations_selected$annotations,'//\n',sep="")))
+for (annotation in 1:nrow(ex.df)){ ## put this in the gloss function and also include a row counter in the paste functions
+  gloss(ex.df)
+}
+
+  apply(ex.df,1,gloss)
+gloss()
 #' print_all_words()
 #'
 #' Prints annotations that contain a certain regex sequence
