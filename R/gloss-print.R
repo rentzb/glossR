@@ -14,6 +14,7 @@
 #' print_selected_time(data,start_annotation,end_annotation)
 #'
 #' @import dplyr
+#' @import tidyverse
 #' @export
 
 print_selected_time <- function(data,start_annotation,end_annotation){
@@ -26,21 +27,17 @@ print_selected_time <- function(data,start_annotation,end_annotation){
 }
 
   gloss <- function(dataframe){
+    dataframe <- as_tibble(dataframe)
+    for (i in 1:nrow(dataframe)){
   ex <- paste(c("\\begingl",
-                paste(c("\\gla", " ", dataframe$gla, "//"), collapse = ""),
-                paste(c("\\glb", " ", dataframe$glb, "//"), collapse = ""),
-                paste(c("\\glft", " ", "`", dataframe$glft, "'", "//"), collapse = ""),
+                paste(c("\\gla", " ", dataframe[[i,"gla"]], "//"), collapse = ""),
+                paste(c("\\glb", " ", dataframe[[i,"glb"]], "//"), collapse = ""),
+                paste(c("\\glft", " ", "`", dataframe[[i,"glft"]], "'", "//"), collapse = ""),
                 "\\endgl"), sep = "\n  ", collapse = "\n  ")
   #asis_output(ex)
   print(ex)
-  }
-  #print(cat(paste(toupper(annotations_selected$participant_name),';\t',annotations_selected$annotations,'//\n',sep="")))
-for (annotation in 1:nrow(ex.df)){ ## put this in the gloss function and also include a row counter in the paste functions
-  gloss(ex.df)
-}
+  }}
 
-  apply(ex.df,1,gloss)
-gloss()
 #' print_all_words()
 #'
 #' Prints annotations that contain a certain regex sequence
