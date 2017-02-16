@@ -39,8 +39,8 @@
 
   \ex~\underline{Patientive voice with unrealized A argument}\\
   <<echo=FALSE>>=
-#  apply(ex.df, 1, gloss, 43.000, 44.000)
-      gloss(ex.df, 43.000, 44.000)
+  lapply(ex.df, gloss, 43.000, 44.000)
+  #    gloss(ex.df, 43.000, 44.000)
 #    if (41.000 >= ex.df$begin){
 #      apply(ex.df, 1, gloss)
 #    } else print("Sorry, I couldn't find an example. Please check the the time you included.")
